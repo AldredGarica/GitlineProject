@@ -47,7 +47,7 @@ namespace Gitline.Controllers
                 if (Imagepath.Length > 0)
                 {
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-                        "wwwroot/img/products", Imagepath.FileName);
+                        "wwwroot/img/inventory", Imagepath.FileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {

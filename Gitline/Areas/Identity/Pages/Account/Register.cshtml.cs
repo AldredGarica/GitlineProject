@@ -106,7 +106,7 @@ namespace Gitline.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email, PhoneNumber = Input.Phone, FirstName = Input.FirstName, LastName = Input.LastName, Address = Input.Address, Zipcode = int.Parse(Input.Zipcode), City = Input.City };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

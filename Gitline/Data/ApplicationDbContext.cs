@@ -18,5 +18,6 @@ namespace Gitline.Data
         public DbSet<Inventory> Inventory { get; set; }
 
 
+
     }
 }

@@ -29,5 +29,9 @@ namespace Gitline.Models
 
         [Display(Name = "Image")]
         public string ImagePath { get; set; }
+
+       
     }
+
+
 }
