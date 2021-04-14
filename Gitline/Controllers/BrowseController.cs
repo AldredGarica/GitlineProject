@@ -8,6 +8,8 @@ using Gitline.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Gitline.Helpers;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gitline.Controllers
 {
@@ -20,8 +22,13 @@ namespace Gitline.Controllers
         }
         public IActionResult Index()
         {
-            var list = _context.Inventory.ToList();
-            return View(list);
+            var productList = _context.Inventory.ToList();
+
+            var model = new StoreViewModel()
+            {
+                ProductList = productList
+            };
+            return View(model);
         }
 
 
@@ -38,42 +45,44 @@ namespace Gitline.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-            return View(item);
+            var model = new StoreViewModel();
+            model.Product = item;
+            return View(model);
         }
 
-        List<ProductOrder> li = new List<ProductOrder>();
+
 
         [HttpPost]
-        public IActionResult AddtoCart(int id, string qty, Inventory pr)
+        public IActionResult AddtoCart(int? id, StoreViewModel record)
         {
-            var item = _context.Inventory.Where(i => i.ProductID == id).SingleOrDefault();
-            var cart = SessionHelper.GetObjectFromJson<List<ProductOrder>>(HttpContext.Session, "cart");
+            var product = _context.Inventory.Where(i => i.ProductID == (int)id).SingleOrDefault(); // gets chosen product record
+            if (product == null) // checks if product is not existing
+                return RedirectToAction("Index", "Browse"); // redirects to browse page if record is not found
 
-
-            // ProductOrder p = new ProductOrder();
-            var p = new ProductOrder();
-            p.ProductOrderID = item.ProductID;
-            p.Quantity = Convert.ToInt32(qty);
-            p.Price = (int)item.Price;
-            p.Total = (int)(item.Price * p.Quantity);
-
-
-            li.Add(p);
-
-            TempData["ProductOrder"]  = li;
-            TempData.Keep();
-
-            return RedirectToAction("Index");
-    
+            var order = new ProductOrder(); // creates a cart record
+            order.Product = product;
+            order.ProductId = id;
+            order.Quantity = record.Quantity;
+            order.ProductName = product.Name;
+            order.Price = product.Price;
+            order.Total = product.Price * record.Quantity;
+            _context.ProductOrder.Add(order); // inserts a record
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Browse"); // redirects to browse page after adding a cart record
 
         }
 
         public IActionResult Cart()
         {
 
-            return View();
+            var cart = _context.ProductOrder.Include(p => p.Product).ToList();
+            var model = new StoreViewModel()
+            {
+                CartList = cart
+            };
+            return View(model);
         }
+
 
     }
 }

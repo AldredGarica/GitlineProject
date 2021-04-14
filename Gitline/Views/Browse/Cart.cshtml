@@ -1,41 +1,58 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Gitline.Models.StoreViewModel
+
+
 @{
+    ViewData["Title"] = "Browse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-@if (TempData["ProductOrder"] != null)
-{
+<h1>Browse</h1>
 
-<table class="table-responsive">
+<table class="table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
+            <th colspan="2">
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Amount
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in TempData["ProductOrder"] as List<Gitline.Models.ProductOrder>)
-        {
+@foreach (var item in Model.CartList) {
         <tr>
-            <td>@item.ProductOrderID</td>
-            <td>@item.ProductName</td>
-            <td>@item.Price</td>
-            <td>@item.Quantity</td>
-            <td>@item.Total</td>
-        </tr>
-        }
+            <td>
+                <img src="~/img/inventory/@item.Product.ImagePath" style="width:300px;height:400px;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Brand)
+            </td>
+            <td>
+                @item.Product.Price.ToString("N")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @item.Total.ToString("N")
+            </td>
 
+            <td>
+
+            </td>
+        </tr>
+}
     </tbody>
 </table>
-
-
-}
-else
-{
-    <h2>Your Cart is empty</h2>
-    @Html.ActionLink("Back","Index","Home")
-}

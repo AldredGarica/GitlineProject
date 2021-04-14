@@ -1,9 +1,11 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@using (Html.BeginForm())
-{
+﻿@model Gitline.Models.StoreViewModel
+
+
+@{
+    ViewData["Title"] = "Browse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
 
 
 <h1>Add to cart</h1>
@@ -13,19 +15,21 @@
 
         <div class="col-lg-4 col-md-4 col-sm-4">
 
-            <img style="min-height:200px; width:200px" src="~/img/inventory/@Url.Content(Model.ImagePath)" />
+            <img style="min-height:200px; width:200px" src="~/img/inventory/@Url.Content(Model.Product.ImagePath)" />
         </div>
 
         <div class="col-lg-8 col-md-8 col-sm-8">
-            <h1>Product Name:@Model.Name</h1>
-            <h1>Price: @Model.Price</h1>
-            <h1>Description: @Model.Description</h1>
+            <form asp-action="AddToCart" asp-controller="Browse">
 
-            <input type="number" name="qty" value="0" id="qty" />
-            <input type="submit" class="btn btn-danger" value="Submit" />
+                <h1>Product Name:@Model.Product.Name</h1>
+                <h1>Price: @Model.Product.Price</h1>
+                <h1>Description: @Model.Product.Description</h1>
+
+                <input type="number" asp-for="Quantity" value="1" required />
+                <input type="submit" class="btn btn-danger" value="Submit" />
+            </form>
         </div>
 
 
     </div>
 </div>
-}
