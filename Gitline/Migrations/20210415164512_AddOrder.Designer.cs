@@ -4,14 +4,16 @@ using Gitline.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Gitline.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210415164512_AddOrder")]
+    partial class AddOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,6 +150,9 @@ namespace Gitline.Migrations
                     b.Property<string>("OrderAddress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderAmount")
+                        .HasColumnType("int");
+
                     b.Property<string>("OrderCity")
                         .HasColumnType("nvarchar(max)");
 
@@ -160,16 +165,18 @@ namespace Gitline.Migrations
                     b.Property<int>("OrderRate")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderUser")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OrderZip")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Order");
                 });
@@ -336,6 +343,13 @@ namespace Gitline.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Gitline.Models.Order", b =>
+                {
+                    b.HasOne("Gitline.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Gitline.Models.ProductOrder", b =>

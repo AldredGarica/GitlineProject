@@ -18,6 +18,8 @@ namespace Gitline.Data
         public DbSet<Inventory> Inventory { get; set; }
         public DbSet<ProductOrder> ProductOrder { get; set; }
 
+        public DbSet<Order> Order { get; set; }
+
 
     }
 }

@@ -7,8 +7,7 @@
 
 }
 
-<h1>Browse</h1>
-
+<h1>Cart</h1>
 <table class="table">
     <thead>
         <tr>
@@ -50,9 +49,13 @@
             </td>
 
             <td>
-
+                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProductId"
+                   onclick='return confirm ("are you sure?");'>
+                    <i class="fa fa-remove"></i>
+                    </a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<a asp-action="CheckOut" >CheckOut</a>

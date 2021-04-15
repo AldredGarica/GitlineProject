@@ -1,0 +1,100 @@
+﻿@model Gitline.Models.Order
+
+
+@{
+    ViewData["Title"] = "Browse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>CheckOut</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CheckOut" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="OrderUser" class="control-label">User</label>
+                <input asp-for="OrderUser" class="form-control" />
+                <span asp-validation-for="OrderUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderAddress" class="control-label">Address</label>
+                <input asp-for="OrderAddress" class="form-control" />
+                <span asp-validation-for="OrderAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderCity" class="control-label">City</label>
+                <input asp-for="OrderCity" class="form-control" />
+                <span asp-validation-for="OrderCity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderZip" class="control-label">Zip Code</label>
+                <input asp-for="OrderZip" class="form-control" />
+                <span asp-validation-for="OrderZip" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderEmail" class="control-label">Email</label>
+                <input asp-for="OrderEmail" class="form-control"></input>
+                <span asp-validation-for="OrderEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderPhone" class="control-label">Mobile No.</label>
+                <input asp-for="OrderPhone" class="form-control" />
+                <span asp-validation-for="OrderPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Confirm Order" class="btn bg-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@*<table class="table">
+    <thead>
+        <tr>
+            <th colspan="2">
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Amount
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartList)
+        {
+            <tr>
+                <td>
+                    <img src="~/img/inventory/@item.Product.ImagePath" style="width:300px;height:400px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Brand)
+                </td>
+                <td>
+                    @item.Product.Price.ToString("N")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @item.Total.ToString("N")
+                </td>
+
+                <td>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProductId"
+                       onclick='return confirm ("are you sure?");'>
+                        <i class="fa fa-remove"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@

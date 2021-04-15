@@ -7,7 +7,6 @@ using Gitline.Data;
 using Gitline.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using Gitline.Helpers;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,6 +82,64 @@ namespace Gitline.Controllers
             return View(model);
         }
 
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
 
+            var item = _context.ProductOrder.Where(i => i.ProductOrderID == id).SingleOrDefault();
+            if (item == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            _context.ProductOrder.Remove(item);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult CheckOut()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public  IActionResult CheckOut(Order record)
+        {
+            //var cart = _context.ProductOrder.Include(p => p.Product).ToList();
+            //var model = new StoreViewModel()
+            //{
+            //    CartList = cart
+            //};
+
+            var o = new Order();
+            o.OrderAddress = record.OrderAddress;
+            o.OrderCity = record.OrderCity;
+            o.OrderZip = record.OrderZip;
+            o.OrderEmail = record.OrderEmail;
+            o.dateTime = DateTime.Now;
+            o.OrderPhone = record.OrderPhone;
+            o.OrderUser = record.OrderUser;
+
+            _context.Order.Add(o);
+            _context.SaveChanges();
+
+            return RedirectToAction("Confirm");
+        }
+
+        public IActionResult Confirm()
+        {
+            //var cart = _context.ProductOrder.Include(p => p.Product).ToList();
+            //var model = new StoreViewModel()
+            //{
+            //    CartList = cart
+            //};
+
+            var list = _context.Order.ToList();
+            return View(list);
+        }
     }
 }

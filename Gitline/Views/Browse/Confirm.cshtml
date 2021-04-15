@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Gitline.Models.Order>
+
+
+@{
+    ViewData["Title"] = "Browse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<table class="table" style="margin-block">
+    <thead>
+        <tr>
+            <h1>Order is now confirmed</h1>
+            <p>Email will be sent shortly</p>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    Order Id : @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderAddress)
+                </td>
+            </tr>            
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderCity)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderZip)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderEmail)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderPhone)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dateTime)
+                </td>
+            </tr>
+          }
+        </tbody>
+    </table>
+<a asp-action="CheckOut">CheckOut</a>

@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20210409152122_AddProductsAndCategories.cs" />
     <Compile Remove="Migrations\20210409152122_AddProductsAndCategories.Designer.cs" />
+    <Compile Remove="Migrations\20210415164136_AddOrder.cs" />
+    <Compile Remove="Migrations\20210415164136_AddOrder.Designer.cs" />
+    <Compile Remove="Migrations\20210415165354_updateOrder.cs" />
+    <Compile Remove="Migrations\20210415165354_updateOrder.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
