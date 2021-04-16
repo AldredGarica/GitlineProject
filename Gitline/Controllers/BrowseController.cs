@@ -111,15 +111,11 @@ namespace Gitline.Controllers
         [HttpPost]
         public  IActionResult CheckOut(int? id,Order record)
         {
-            //var cart = _context.ProductOrder.Include(p => p.Product).ToList();
-            //var model = new StoreViewModel()
-            //{
-            //    CartList = cart
-            //};
+     
 
             var product = _context.ProductOrder.Where(i => i.ProductOrderID == (int)id).SingleOrDefault(); // gets chosen product record
-            if (product == null) // checks if product is not existing
-                return RedirectToAction("Index", "Browse"); // redirects to browse page if record is not found
+            if (product == null) 
+                return RedirectToAction("Index", "Browse"); 
 
             var o = new Order();
             o.OrderAddress = record.OrderAddress;
