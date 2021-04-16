@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using System.Net;
 
 namespace Gitline.Controllers
 {
@@ -107,13 +109,17 @@ namespace Gitline.Controllers
         }
 
         [HttpPost]
-        public  IActionResult CheckOut(Order record)
+        public  IActionResult CheckOut(int? id,Order record)
         {
             //var cart = _context.ProductOrder.Include(p => p.Product).ToList();
             //var model = new StoreViewModel()
             //{
             //    CartList = cart
             //};
+
+            var product = _context.ProductOrder.Where(i => i.ProductOrderID == (int)id).SingleOrDefault(); // gets chosen product record
+            if (product == null) // checks if product is not existing
+                return RedirectToAction("Index", "Browse"); // redirects to browse page if record is not found
 
             var o = new Order();
             o.OrderAddress = record.OrderAddress;
@@ -123,23 +129,108 @@ namespace Gitline.Controllers
             o.dateTime = DateTime.Now;
             o.OrderPhone = record.OrderPhone;
             o.OrderUser = record.OrderUser;
+            o.Product = product;
 
             _context.Order.Add(o);
             _context.SaveChanges();
+
+            using (MailMessage mail = new MailMessage("gitline2525@gmail.com", record.OrderEmail))
+            {
+                mail.Subject = "Gitline Order Receipt";
+
+                string message = "Hello, " + o.OrderUser + " Your order is now confirmed!<br/><br/>" +
+                    "Here are the details: <br/><br/>" +
+                    "Order Id: <strong>" + o.OrderId + "</strong><br/><br/>" +
+                    "Product: <strong>" + o.Product.ProductName + "</strong>      x" + o.Product.Quantity + "<br/><br/>" +
+                    "Address: <strong>" + o.OrderAddress + "</strong><br/><br/>" +
+                    "City: <strong>" + o.OrderCity + "</strong><br/><br/>" +
+                    "Zip: <strong>" + o.OrderZip + "</strong><br/><br/>" +
+                    "Email: <strong>" + o.OrderEmail + "</strong><br/><br/>" +
+                    "Phone: <strong>" + o.OrderPhone + "</strong><br/><br/>" +
+                    "Date: <strong>" + o.dateTime + "</strong><br/><br/> Thank you for purchasing!";
+
+                mail.Body = message;
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient())
+                {
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    NetworkCredential NetworkCred = new NetworkCredential("gitline2525@gmail.com", "Gitline123");
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587;
+                    smtp.Send(mail);
+                    ViewBag.Message = "Email sent.";
+                }
+            }
+
 
             return RedirectToAction("Confirm");
         }
 
         public IActionResult Confirm()
         {
-            //var cart = _context.ProductOrder.Include(p => p.Product).ToList();
-            //var model = new StoreViewModel()
-            //{
-            //    CartList = cart
-            //};
+            var cart = _context.Order.Include(p => p.Product).ToList();
+            var model = new OrderViewModel()
+            {
+                OrderList = cart
+                
+            };
 
-            var list = _context.Order.ToList();
-            return View(list);
+      
+
+            return View(model);
+        }
+
+        //[HttpPost]
+        //public IActionResult Confirm(Order record)
+        //{
+        //    using (MailMessage mail = new MailMessage("gitline2525@gmail.com", record.OrderEmail))
+        //    {
+        //        mail.Subject = "Gitline Order Receipt";
+
+        //        string message = "Hello, Your order is now confirmed!<br/><br/>" +
+        //            "Here are the details: <br/><br/>" +
+        //            "Order Id: <strong>" + record.OrderId + "</strong><br/><br/>";
+                 
+
+
+        //        mail.Body = message;
+        //        mail.IsBodyHtml = true;
+
+        //        using (SmtpClient smtp = new SmtpClient())
+        //        {
+        //            smtp.Host = "smtp.gmail.com";
+        //            smtp.EnableSsl = true;
+        //            NetworkCredential NetworkCred = new NetworkCredential("gitline2525@gmail.com", "Gitline123");
+        //            smtp.UseDefaultCredentials = true;
+        //            smtp.Credentials = NetworkCred;
+        //            smtp.Port = 587;
+        //            smtp.Send(mail);
+        //            ViewBag.Message = "Email sent.";
+        //        }
+        //    }
+        //    return View();
+        //}
+
+        public IActionResult DeleteC(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var item = _context.Order.Where(i => i.OrderId == id).SingleOrDefault();
+            if (item == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            _context.Order.Remove(item);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

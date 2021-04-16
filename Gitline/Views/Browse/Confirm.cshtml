@@ -1,12 +1,17 @@
-﻿@model IEnumerable<Gitline.Models.Order>
-
+﻿@*@model IEnumerable<Gitline.Models.Order>*@
+@model Gitline.Models.OrderViewModel
 
 @{
     ViewData["Title"] = "Browse";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
 <table class="table" style="margin-block">
     <thead>
         <tr>
@@ -15,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.OrderList)
         {
             <tr>
                 <td>
@@ -24,9 +29,17 @@
             </tr>
             <tr>
                 <td>
+                    Order Id :@Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td>
+                    x @Html.DisplayFor(modelItem => item.Product.Quantity)
+                </td>
+            </tr>
+            <tr>
+                <td>
                     @Html.DisplayFor(modelItem => item.OrderAddress)
                 </td>
-            </tr>            
+            </tr>
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderCity)
@@ -52,7 +65,11 @@
                     @Html.DisplayFor(modelItem => item.dateTime)
                 </td>
             </tr>
-          }
-        </tbody>
-    </table>
-<a asp-action="CheckOut">CheckOut</a>
+            <tr>
+                <td>
+                    <a asp-action="DeleteC" asp-route-id="@item.OrderId"
+                       onclick='return confirm ("are you sure?");'>Confirm</a>
+                </td>
+            </tr>
+        }
+

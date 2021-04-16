@@ -52,10 +52,13 @@
                 <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProductId"
                    onclick='return confirm ("are you sure?");'>
                     <i class="fa fa-remove"></i>
-                    </a>
+                </a>
+            </td>
+            <td>
+                <a asp-action="CheckOut" asp-route-id="@item.ProductOrderID">CheckOut</a> |
             </td>
         </tr>
 }
     </tbody>
 </table>
-<a asp-action="CheckOut" >CheckOut</a>
+@*<a asp-action="CheckOut" asp-route-id="@Model.Product" >CheckOut</a>*@

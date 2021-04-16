@@ -20,6 +20,9 @@ namespace Gitline.Data
 
         public DbSet<Order> Order { get; set; }
 
+        public DbSet<Contact> Contact { get; set; }
+
+
 
     }
 }
