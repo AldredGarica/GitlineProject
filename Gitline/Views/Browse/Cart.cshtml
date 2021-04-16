@@ -55,7 +55,7 @@
                 </a>
             </td>
             <td>
-                <a asp-action="CheckOut" asp-route-id="@item.ProductOrderID">CheckOut</a> |
+                <a asp-action="CheckOut" asp-route-id="@item.ProductOrderID" onclick='return confirm ("are you sure?");'>CheckOut</a> |
             </td>
         </tr>
 }

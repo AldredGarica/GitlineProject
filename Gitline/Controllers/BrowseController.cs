@@ -161,7 +161,8 @@ namespace Gitline.Controllers
                 }
             }
 
-
+            _context.ProductOrder.Remove(product);
+            _context.SaveChanges();
             return RedirectToAction("Confirm");
         }
 
