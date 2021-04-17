@@ -8,7 +8,7 @@
 }
 
 <h1>Browse</h1>
-<table class="table">
+<table class="table" id="records">
     <thead>
         <tr>
             <th colspan="2">
@@ -33,34 +33,44 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ProductList) {
-        <tr>
-            <td>
-                <img src="~/img/inventory/@item.ImagePath" style="width:300px;height:400px;" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @item.Price.ToString("N")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
+        @foreach (var item in Model.ProductList)
+        {
+            <tr>
+                <td>
+                    <img src="~/img/inventory/@item.ImagePath" style="width:300px;height:400px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @item.Price.ToString("N")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
 
-            <td>
-                <a asp-action="AddtoCart" asp-route-id="@item.ProductID">Add to Cart</a> |
-            </td>
-        </tr>
-}
+                <td>
+                    <a asp-action="AddtoCart" asp-route-id="@item.ProductID">Add to Cart</a> |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts{
+    <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#records').dataTable();
+        });
+    </script>}

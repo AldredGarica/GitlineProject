@@ -20,14 +20,16 @@ namespace Gitline.Models
         [Required(ErrorMessage = "Required. ")]
         public int OrderZip { get; set; }
         public DateTime dateTime { get; set; }
+
         [Required(ErrorMessage = "Required. ")]
         public int OrderPhone { get; set; }
+
         [DataType(DataType.EmailAddress, ErrorMessage = "Invalid format. ")]
         [Required(ErrorMessage = "Required. ")]
         public string OrderEmail { get; set; }
         public int OrderRate { get; set; }
-        [Required(ErrorMessage = "Required. ")]
 
+        [Required(ErrorMessage = "Required. ")]
         public string OrderUser { get; set; }
 
         public virtual ProductOrder Product { get; set; }

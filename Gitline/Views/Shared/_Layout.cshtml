@@ -31,7 +31,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
                         </li>
                         <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
                         <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
@@ -47,16 +47,7 @@
                         <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
                         <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
                         <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
-                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark px-3" asp-area="" asp-controller="Browse" asp-action="Index">Browse</a>
                         </li>
@@ -66,6 +57,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark px-3" asp-area="" asp-controller="Browse" asp-action="Cart">Cart</a>
                         </li>
+                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
+                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
+                        <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action=""></a></li>
+                        <partial name="_LoginPartial.cshtml" />
                     </ul>
                 </div>
             </div>
@@ -76,7 +71,7 @@
             @RenderBody()
         </main>
     </div>
-        
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - Gitline - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -88,3 +83,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+    

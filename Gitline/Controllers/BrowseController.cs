@@ -61,6 +61,11 @@ namespace Gitline.Controllers
                 return RedirectToAction("Index", "Browse"); // redirects to browse page if record is not found
 
             var order = new ProductOrder(); // creates a cart record
+
+            if(record.Quantity > product.Stock)
+                return RedirectToAction("Index", "Browse");
+
+
             order.Product = product;
             order.ProductId = id;
             order.Quantity = record.Quantity;
@@ -113,9 +118,12 @@ namespace Gitline.Controllers
         {
      
 
-            var product = _context.ProductOrder.Where(i => i.ProductOrderID == (int)id).SingleOrDefault(); // gets chosen product record
-            if (product == null) 
-                return RedirectToAction("Index", "Browse"); 
+            var product = _context.ProductOrder.Where(i => i.ProductOrderID == (int)id).SingleOrDefault(); 
+            if (product == null)
+            {
+                return RedirectToAction("Index", "Browse");
+            }
+
 
             var o = new Order();
             o.OrderAddress = record.OrderAddress;
@@ -168,6 +176,7 @@ namespace Gitline.Controllers
 
         public IActionResult Confirm()
         {
+
             var cart = _context.Order.Include(p => p.Product).ToList();
             var model = new OrderViewModel()
             {
@@ -179,37 +188,6 @@ namespace Gitline.Controllers
 
             return View(model);
         }
-
-        //[HttpPost]
-        //public IActionResult Confirm(Order record)
-        //{
-        //    using (MailMessage mail = new MailMessage("gitline2525@gmail.com", record.OrderEmail))
-        //    {
-        //        mail.Subject = "Gitline Order Receipt";
-
-        //        string message = "Hello, Your order is now confirmed!<br/><br/>" +
-        //            "Here are the details: <br/><br/>" +
-        //            "Order Id: <strong>" + record.OrderId + "</strong><br/><br/>";
-                 
-
-
-        //        mail.Body = message;
-        //        mail.IsBodyHtml = true;
-
-        //        using (SmtpClient smtp = new SmtpClient())
-        //        {
-        //            smtp.Host = "smtp.gmail.com";
-        //            smtp.EnableSsl = true;
-        //            NetworkCredential NetworkCred = new NetworkCredential("gitline2525@gmail.com", "Gitline123");
-        //            smtp.UseDefaultCredentials = true;
-        //            smtp.Credentials = NetworkCred;
-        //            smtp.Port = 587;
-        //            smtp.Send(mail);
-        //            ViewBag.Message = "Email sent.";
-        //        }
-        //    }
-        //    return View();
-        //}
 
         public IActionResult DeleteC(int? id)
         {

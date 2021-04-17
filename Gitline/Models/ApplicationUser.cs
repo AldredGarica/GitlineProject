@@ -12,7 +12,7 @@ namespace Gitline.Models
 
         public string LastName { get; set; }
         public string Address { get; set; }
-        public int Zipcode { get; set; }
+        public string Zipcode { get; set; }
 
         public string City { get; set; }
 
