@@ -207,5 +207,74 @@ namespace Gitline.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public  IActionResult Review(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var item = _context.Order.Where(i => i.OrderId == id).SingleOrDefault();
+            if (item == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var model = new Review();
+            model.Order = item;
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public IActionResult Review(int? id, Review record)
+        {
+            var order = _context.Order.Where(i => i.OrderId == id).SingleOrDefault();
+            if (order == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+
+            var r = new Review();
+            r.Order = order;
+            r.Rate = record.Rate;
+            r.Message = record.Message;
+
+            _context.Review.Add(r);
+            _context.SaveChanges();
+
+
+
+
+            using (MailMessage mail = new MailMessage("gitline2525@gmail.com", "gitline2525@gmail.com"))
+            {
+                mail.Subject = r.Order.OrderId + " " + r.Order.OrderUser + " Review";
+
+                string message = "Review from " + r.Order.OrderUser + "<br/><br/>" +
+                    "Rating : <strong>" + r.Rate + "</strong><br/><br/>" +
+                    "Message: <strong>" + r.Message + "</strong><br/><br/>";
+
+
+                mail.Body = message;
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient())
+                {
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    NetworkCredential NetworkCred = new NetworkCredential("gitline2525@gmail.com", "Gitline123");
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587;
+                    smtp.Send(mail);
+                    ViewBag.Message = "Inquiry sent.";
+                }
+            }
+            _context.Order.Remove(order);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

@@ -12,6 +12,8 @@
     <Compile Remove="Migrations\20210415164136_AddOrder.Designer.cs" />
     <Compile Remove="Migrations\20210415165354_updateOrder.cs" />
     <Compile Remove="Migrations\20210415165354_updateOrder.Designer.cs" />
+    <Compile Remove="Migrations\20210418201643_AddReview.cs" />
+    <Compile Remove="Migrations\20210418201643_AddReview.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

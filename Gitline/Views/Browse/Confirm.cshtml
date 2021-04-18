@@ -28,7 +28,7 @@
             </tr>
             <tr>
                 <td>
-                    Order Id :@Html.DisplayFor(modelItem => item.Product.ProductName)
+                    Product :@Html.DisplayFor(modelItem => item.Product.ProductName)
                 </td>
                 <td>
                     x @Html.DisplayFor(modelItem => item.Product.Quantity)
@@ -66,7 +66,7 @@
             </tr>
             <tr>
                 <td>
-                    <a asp-action="DeleteC" asp-route-id="@item.OrderId">Confirm</a>
+                    <a asp-action="Review" asp-route-id="@item.OrderId">Confirm</a>
                       
                 </td>
             </tr>
