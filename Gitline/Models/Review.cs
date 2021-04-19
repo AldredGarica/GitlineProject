@@ -12,7 +12,7 @@ namespace Gitline.Models
         public int ReviewId { get; set; }
         public virtual Order Order { get; set; }
 
-        [Display(Name = "Rate the item")]
+        [Display(Name = "Please Rate the item (1-5)")]
         [Required(ErrorMessage = "Required. ")]
         public string Rate  { get; set; }
 

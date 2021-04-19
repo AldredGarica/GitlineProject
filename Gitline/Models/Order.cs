@@ -22,7 +22,7 @@ namespace Gitline.Models
         public DateTime dateTime { get; set; }
 
         [Required(ErrorMessage = "Required. ")]
-        public int OrderPhone { get; set; }
+        public string OrderPhone { get; set; }
 
         [DataType(DataType.EmailAddress, ErrorMessage = "Invalid format. ")]
         [Required(ErrorMessage = "Required. ")]
