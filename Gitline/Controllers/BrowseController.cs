@@ -184,7 +184,7 @@ namespace Gitline.Controllers
                 
             };
 
-      
+            
 
             return View(model);
         }
@@ -222,6 +222,7 @@ namespace Gitline.Controllers
             }
             var model = new Review();
             model.Order = item;
+
             return View(model);
 
         }
