@@ -189,24 +189,6 @@ namespace Gitline.Controllers
             return View(model);
         }
 
-        public IActionResult DeleteC(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            var item = _context.Order.Where(i => i.OrderId == id).SingleOrDefault();
-            if (item == null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            _context.Order.Remove(item);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
 
         public  IActionResult Review(int? id)
         {
